@@ -6,12 +6,12 @@ import 'package:flutter_cart/screens/splash_screen.dart';
 void main() {
   runApp(MyApp());
 }
-
+class LoadCartEvent extends CartEvent {}
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => CartBloc(),
+      create: (context) => CartBloc()..add(LoadCartEvent()),
       child: MaterialApp(
         title: 'Shopping Cart',
          debugShowCheckedModeBanner: false,

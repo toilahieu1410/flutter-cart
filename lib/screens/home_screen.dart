@@ -69,6 +69,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isTablet = MediaQuery.of(context).size.width > 600;
+    final hotProductItemCount = isTablet ? 4.5 : 2.5;
+    final allProductItemCount = isTablet ? 4 : 2;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange,
@@ -118,6 +122,7 @@ class HomeScreen extends StatelessWidget {
                     )
                   ),
           ),
+          // Hiển thị sản phẩm hot
           SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(12.0),
@@ -162,7 +167,34 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-          
+          GridView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: products.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 2 / 3,
+            ),
+            itemBuilder: (context, index) {
+              final product = products[index];
+              return ProductTile(
+                product: product, 
+                onAddToCart: () {
+                  showModalBottomSheet(
+                    context: context, 
+                    builder: (_) => QuantitySelectorBottomSheet(
+                      product: product, 
+                      onAddToCart: (quantity) {
+                        context.read<CartBloc>().add(
+                          AddToCartEvent(product, quantity)
+                        );
+                      }
+                    ),
+                  );
+                }
+              );
+            },
+          )
         ],
       ),
     );
