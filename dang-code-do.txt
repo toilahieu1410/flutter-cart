@@ -1,0 +1,240 @@
+// lib/screens/home_screen.dart
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../blocs/cart_bloc.dart';
+import '../models/product.dart';
+import '../widgets/product_tile.dart';
+import '../widgets/bottom_sheet_quantity_selector.dart';
+import 'cart_screen.dart';
+
+class HomeScreen extends StatelessWidget {
+  final List<Product> products = [
+    Product(
+      id: 1,
+      name: 'Product #1',
+      imageUrl: 'assets/images/product_1.jpg',
+      price: 10000.0,
+    ),
+    Product(
+      id: 2,
+      name: 'Product #2',
+      imageUrl: 'assets/images/product_2.jpg',
+      price: 20000.0,
+    ),
+    Product(
+      id: 3,
+      name: 'Product #3',
+      imageUrl: 'assets/images/product_3.jpg',
+      price: 30000.0,
+      isHot: true,
+    ),
+    Product(
+      id: 4,
+      name: 'Product #4',
+      imageUrl: 'assets/images/product_4.jpg',
+      price: 40000.0,
+    ),
+    Product(
+      id: 5,
+      name: 'Product #5',
+      imageUrl: 'assets/images/product_5.jpg',
+      price: 50000.0,
+    ),
+    Product(
+      id: 6,
+      name: 'Product #6',
+      imageUrl: 'assets/images/product_6.jpg',
+      price: 60000.0,
+      isHot: true,
+    ),
+    Product(
+      id: 7,
+      name: 'Product #7',
+      imageUrl: 'assets/images/product_7.jpg',
+      price: 70000.0,
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+        actions: [
+          BlocBuilder<CartBloc, CartState>(
+            builder: (context, state) {
+              return Stack(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.shopping_cart),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => CartScreen()),
+                      );
+                    },
+                  ),
+                  if (state.totalItems > 0)
+                    Positioned(
+                      right: 8,
+                      top: 8,
+                      child: CircleAvatar(
+                        radius: 10,
+                        backgroundColor: Colors.red,
+                        child: Text(
+                          state.totalItems.toString(),
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('HOT Products', style: TextStyle(fontSize: 18)),
+          ),
+          Container(
+            height: 150,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                final product = products[index];
+                return ProductTile(
+                  product: product,
+                  onAddToCart: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (_) => QuantitySelectorBottomSheet(
+                        product: product,
+                        onAddToCart: (quantity) {
+                          context.read<CartBloc>().add(
+                                AddToCartEvent(product, quantity),
+                              );
+                        },
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('All Products', style: TextStyle(fontSize: 18)),
+          ),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: products.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 2 / 3,
+            ),
+            itemBuilder: (context, index) {
+              final product = products[index];
+              return ProductTile(
+                product: product,
+                onAddToCart: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (_) => QuantitySelectorBottomSheet(
+                      product: product,
+                      onAddToCart: (quantity) {
+                        context.read<CartBloc>().add(
+                              AddToCartEvent(product, quantity),
+                            );
+                      },
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+// lib/widgets/bottom_sheet_quantity_selector.dart
+import 'package:flutter/material.dart';
+import '../models/product.dart';
+
+class QuantitySelectorBottomSheet extends StatefulWidget {
+  final Product product;
+  final void Function(int quantity) onAddToCart;
+
+  const QuantitySelectorBottomSheet({
+    Key? key,
+    required this.product,
+    required this.onAddToCart,
+  }) : super(key: key);
+
+  @override
+  _QuantitySelectorBottomSheetState createState() =>
+      _QuantitySelectorBottomSheetState();
+}
+
+class _QuantitySelectorBottomSheetState
+    extends State<QuantitySelectorBottomSheet> {
+  int quantity = 1;
+
+  void _updateQuantity(int value) {
+    setState(() {
+      quantity = value.clamp(1, 999);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(widget.product.name),
+              IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          ),
+          Text('Price: \$${widget.product.price.toStringAsFixed(2)}'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                icon: Icon(Icons.remove),
+                onPressed: () => _updateQuantity(quantity - 1),
+              ),
+              Text(quantity.toString()),
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () => _updateQuantity(quantity + 1),
+              ),
+            ],
+          ),
+          ElevatedButton(
+            onPressed: () {
+              widget.onAddToCart(quantity);
+              Navigator.pop(context);
+            },
+            child: Text('Add to cart'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
