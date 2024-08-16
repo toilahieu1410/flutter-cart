@@ -130,7 +130,7 @@ class _QuantitySelectorBottomSheetState
                                 onTap: _openQuantityInputDialog,
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 16, vertical: 4),
+                                      horizontal: 16, vertical: 3),
                                   decoration: BoxDecoration(
                                       border: const Border(
                                         top: BorderSide(
@@ -206,7 +206,7 @@ class _QuantitySelectorBottomSheetState
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,
-                padding: const EdgeInsets.symmetric(vertical: 20),
+                padding: const EdgeInsets.symmetric(vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),

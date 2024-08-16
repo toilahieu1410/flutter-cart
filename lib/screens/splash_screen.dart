@@ -19,8 +19,13 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          const Center(
-            child: Icon(Icons.shopping_cart, size: 100, color: Colors.green),
+           Center(
+            child: Image.asset(
+              'assets/images/cart.png',
+               width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
           ),
           Positioned(
             bottom: 16,

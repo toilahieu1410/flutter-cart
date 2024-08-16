@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cart/screens/home_screen.dart';
 import 'package:flutter_cart/widgets/quantity_input_modal.dart';
 import 'package:intl/intl.dart';
 import '../blocs/cart_bloc.dart';
@@ -169,7 +170,7 @@ class CartScreen extends StatelessWidget {
                                                     }
                                                   },
                                                   child: Container(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                                                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 3),
                                                     decoration: const BoxDecoration(
                                                       border: Border(
                                                         top: BorderSide(
@@ -268,7 +269,14 @@ class CartScreen extends StatelessWidget {
                               width: double.infinity,
                               child: TextButton(
                                 onPressed: () {
-                                  Navigator.pop(context);
+                                  // quay lại màn hình trước đó
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                     MaterialPageRoute(
+                                      builder: (context) => const HomeScreen(), // Đảm bảo điều hướng về HomeScreen
+                                    ),
+                                    (route) => false,
+                                  );
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.orange,
