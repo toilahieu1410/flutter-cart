@@ -9,10 +9,10 @@ class QuantitySelectorBottomSheet extends StatefulWidget {
   final void Function(int quantity) onAddToCart;
 
   const QuantitySelectorBottomSheet({
-    Key? key,
+    super.key,
     required this.product,
     required this.onAddToCart,
-  }) : super(key: key);
+  });
 
   @override
   _QuantitySelectorBottomSheetState createState() =>
@@ -20,7 +20,7 @@ class QuantitySelectorBottomSheet extends StatefulWidget {
 }
 
 class _QuantitySelectorBottomSheetState
-    extends State<QuantitySelectorBottomSheet> {
+  extends State<QuantitySelectorBottomSheet> {
   int quantity = 1;
 
   void _updateQuantity(int value) {
@@ -31,11 +31,12 @@ class _QuantitySelectorBottomSheetState
 
   Future<void> _openQuantityInputDialog() async {
     final newQuantity = await showDialog<int>(
-        context: context,
-        builder: (context) => ProductQuantityModal(
-              initialQuantity: quantity,
-              productName: widget.product.name,
-            ));
+      context: context,
+      builder: (context) => ProductQuantityModal(
+        initialQuantity: quantity,
+        productName: widget.product.name,
+      )
+    );
     if (newQuantity != null) {
       _updateQuantity(newQuantity);
     }
@@ -60,12 +61,19 @@ class _QuantitySelectorBottomSheetState
               // Thêm hình ảnh
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.network(
-                  widget.product.imageUrl,
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.cover,
-                ),
+                  child: widget.product.imageUrl.startsWith('http')
+                  ? Image.network(
+                      widget.product.imageUrl,
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.asset(
+                      widget.product.imageUrl,
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.cover,
+                    ),
               ),
 
               const SizedBox(width: 16),
@@ -164,7 +172,7 @@ class _QuantitySelectorBottomSheetState
                                   iconSize: 16,
                                   icon: const Icon(Icons.add),
                                   onPressed: () =>
-                                      _updateQuantity(quantity + 1),
+                                    _updateQuantity(quantity + 1),
                                 ),
                               ),
                             ],

@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_cart/models/product.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;
   final VoidCallback onAddToCart;
+  final double imageHeight;
+  final bool showHotIcon;
 
   const ProductTile({
-    Key? key,
+    super.key,
     required this.product,
     required this.onAddToCart,
-  }) : super(key: key);
+    this.imageHeight = 130,
+    this.showHotIcon = false
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +30,7 @@ class ProductTile extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Column(
+          
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
@@ -35,9 +39,9 @@ class ProductTile extends StatelessWidget {
                   product.imageUrl,
                   fit: BoxFit.cover,
                   width: double.infinity,
-                  height: 130, // Đặt chiều cao cho hình ảnh
+                  height: imageHeight, // Đặt chiều cao cho hình ảnh
                 ),
-                if (product.isHot)
+                if ( showHotIcon)
                   const Positioned(
                     top: 10,
                     left: 10,
@@ -61,11 +65,17 @@ class ProductTile extends StatelessWidget {
                   children: [
                     Text(
                       product.name,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14
+                      ),
                     ),
                     Text(
                       priceFormat.format(product.price),
-                      style: const TextStyle(color: Colors.orange),
+                      style: const TextStyle(
+                        color: Colors.orange,
+                        fontWeight: FontWeight.w500
+                      ),
                     ),
                   ],
                 ),

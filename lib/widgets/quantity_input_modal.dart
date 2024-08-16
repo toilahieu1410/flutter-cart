@@ -6,10 +6,10 @@ class ProductQuantityModal extends StatefulWidget {
   // final String product;
   // constructor cho widget , nhận vào giá trị số lượng ban đầu
   const ProductQuantityModal({
-    Key? key,
+    super.key,
     required this.initialQuantity,
     required this.productName, 
-  }) : super(key: key);
+  });
 
   @override
   _ProductQuantityModalState createState() => _ProductQuantityModalState();

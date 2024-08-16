@@ -1,10 +1,12 @@
 // lib/blocs/cart_bloc.dart
+import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cart/database/cart_database.dart';
-import 'package:flutter_cart/main.dart';
 import '../models/product.dart';
 
-class CartState {
+void main() {}
+
+class CartState extends Equatable{
   final Map<Product, int> items;
 
   CartState({this.items = const {}});
@@ -13,9 +15,13 @@ class CartState {
       items.entries.fold(0, (total, entry) => total + entry.key.price * entry.value);
 
   int get totalItems => items.values.fold(0, (total, quantity) => total + quantity);
+  @override
+  List<Object?> get props => [items];
 }
 
 class CartEvent {}
+
+class LoadCartEvent extends CartEvent {}
 
 class AddToCartEvent extends CartEvent {
   final Product product;
@@ -40,28 +46,24 @@ class RemoveFromCartEvent extends CartEvent {
 class ClearCartEvent extends CartEvent {}
 
 class CartBloc extends Bloc<CartEvent, CartState> {
-  final CartDatabase _cartDatabase = CartDatabase();
+  final CartDatabase _cartDatabase;
 
-  CartBloc() : super(CartState()) {
+  CartBloc(this._cartDatabase) : super(CartState()) {
     on<LoadCartEvent>((event, emit) async {
       final cartItems = await _cartDatabase.getCartItems();
-      final items = {
-        for (var item in cartItems)
-        Product(
-          id: item['id'], 
-          name: item['name'], 
-          imageUrl: item['imageUrl'], 
-          price: item['price'],
-        ) : item['quantity'],
-      };
-      emit(CartState(items: items));
+       if(cartItems != null) {
+        emit(CartState(items: cartItems));
+      } else {
+        emit(CartState(items: {}));
+      }
+          
     });
 
     on<AddToCartEvent>((event, emit) async {
       final items = Map<Product, int>.from(state.items);
       if (items.containsKey(event.product)) {
         items[event.product] = items[event.product]! + event.quantity;
-         await _cartDatabase.updateQuantity(event.product.id, items[event.product]!);
+        await _cartDatabase.updateQuantity(event.product.id, items[event.product]!);
       } else {
         items[event.product] = event.quantity;
         await _cartDatabase.addToCart(event.product, event.quantity);
