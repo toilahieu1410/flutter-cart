@@ -23,6 +23,8 @@ import 'package:sqflite/sqflite.dart' as _i2;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
+// flutter pub run build_runner build //giúp tạo các mock class một cách tự động, điều này làm cho quá trình viết test dễ dàng và hiệu quả hơn.
+
 class _FakeDatabase_0 extends _i1.SmartFake implements _i2.Database {
   _FakeDatabase_0(
     Object parent,
