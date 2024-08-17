@@ -12,7 +12,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final priceFormat = NumberFormat.currency(
       locale: 'vi_VN',
-      symbol: '₫',
+      symbol: 'đ',
       decimalDigits: 0, // Không hiển thị phần thập phân
     );
     return Scaffold(
@@ -148,9 +148,19 @@ class CartScreen extends StatelessWidget {
                                                     onPressed: () {
                                                       if (quantity > 1) {
                                                         context.read<CartBloc>().add(UpdateQuantityEvent(product, quantity - 1));
-                                                      } else {
-                                                        context.read<CartBloc>().add(RemoveFromCartEvent(product));
-                                                      }
+                                                      } 
+
+                                                      // Điều kiện else có 2 trường hợp 
+                                                      // TH1:  Người dùng nhấn nút giảm khi sản phẩm đã về 1 thì sản phẩm đó sẽ bị xoá khỏi giỏ hàng
+                                                      // TH2: Người dùng nhấn nút giảm khi sp đã về 1 thì sẽ có cảnh báo không được giảm dưới 1 
+
+                                                      // else {
+
+                                                      // TH1  context.read<CartBloc>().add(RemoveFromCartEvent(product));
+                                                      // TH2  ScaffoldMessenger.of(context).showSnackBar(
+                                                      //      SnackBar(content: Text('Cannot reduce quantity below 1')),
+                                                      //    );
+                                                      //  }
                                                     },
                                                   ),
                                                 ),
@@ -282,7 +292,7 @@ class CartScreen extends StatelessWidget {
                                   backgroundColor: Colors.orange,
                                   padding: const EdgeInsets.symmetric(vertical: 16),
                                   shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
                                 child: const Text(
