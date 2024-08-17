@@ -12,7 +12,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final priceFormat = NumberFormat.currency(
       locale: 'vi_VN',
-      symbol: 'đ',
+      symbol: '₫',
       decimalDigits: 0, // Không hiển thị phần thập phân
     );
     return Scaffold(
@@ -282,7 +282,7 @@ class CartScreen extends StatelessWidget {
                                   backgroundColor: Colors.orange,
                                   padding: const EdgeInsets.symmetric(vertical: 16),
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
+                                  borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
                                 child: const Text(

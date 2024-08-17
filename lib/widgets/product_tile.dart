@@ -23,7 +23,7 @@ class ProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final priceFormat = NumberFormat.currency(
       locale: 'vi_VN',
-      symbol: 'đ',
+      symbol: '₫',
       decimalDigits: 0, // Không hiển thị phần thập phân
     );
     return GestureDetector(
@@ -55,7 +55,7 @@ class ProductTile extends StatelessWidget {
                   Image.asset(
                     product.imageUrl,
                     fit: BoxFit.cover,
-                    width: double.infinity,
+                    width: double.infinity, // full width
                     height: imageHeight, // Đặt chiều cao cho hình ảnh
                   ),
                   if ( showHotIcon)

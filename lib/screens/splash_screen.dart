@@ -34,9 +34,7 @@ class SplashScreen extends StatelessWidget {
             child: Text(
               '© ${DateTime.now().year} Design by Minh Hieu',
               textAlign: TextAlign.center,
-              
-            ),
-            
+            ), 
           ),
         ],
       ),

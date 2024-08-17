@@ -47,7 +47,7 @@ class _QuantitySelectorBottomSheetState
     // Định dạng số tiền với dấu chấm phân cách hàng nghìn
     final priceFormat = NumberFormat.currency(
       locale: 'vi_VN',
-      symbol: 'đ',
+      symbol: '₫',
       decimalDigits: 0, // Không hiển thị phần thập phân
     );
     return Container(
@@ -121,7 +121,7 @@ class _QuantitySelectorBottomSheetState
                                   iconSize: 16,
                                   icon: const Icon(Icons.remove),
                                   onPressed: () =>
-                                      _updateQuantity(quantity - 1),
+                                    _updateQuantity(quantity - 1),
                                 ),
                               ),
 
@@ -139,10 +139,8 @@ class _QuantitySelectorBottomSheetState
                                         bottom: BorderSide(
                                             color: Color.fromARGB(
                                                 255, 190, 189, 189)),
-                                        left: BorderSide
-                                            .none, // Loại bỏ border ở bên trái
-                                        right: BorderSide
-                                            .none, // Loại bỏ border ở bên phải
+                                        left: BorderSide.none, // Loại bỏ border ở bên trái
+                                        right: BorderSide.none, // Loại bỏ border ở bên phải
                                       ),
                                       borderRadius: BorderRadius.circular(0)),
                                   child: Padding(
@@ -158,15 +156,17 @@ class _QuantitySelectorBottomSheetState
 
                               // Nút tăng số lượng
                               Container(
-                                      width: 32, // Điều chỉnh chiều rộng của nút
+                                width: 32, // Điều chỉnh chiều rộng của nút
                                 height: 32,
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: const Color.fromARGB(
-                                          255, 190, 189, 189)),
+                                    color: const Color.fromARGB(
+                                        255, 190, 189, 189)
+                                      ),
                                   borderRadius: const BorderRadius.only(
-                                      topRight: Radius.circular(10),
-                                      bottomRight: Radius.circular(10)),
+                                    topRight: Radius.circular(10),
+                                    bottomRight: Radius.circular(10)
+                                  ),
                                 ),
                                 child: IconButton(
                                   iconSize: 16,

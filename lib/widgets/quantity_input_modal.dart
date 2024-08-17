@@ -75,7 +75,7 @@ class _ProductQuantityModalState extends State<ProductQuantityModal> {
                   if (quantity == null || quantity <= 0) {
                     return 'Nhập giá trị vào';
                   } else if (quantity > 999) {
-                    return 'Quantity cannot exceed 999';
+                    return 'Giá trị không được vượt quá 999';
                   } else {
                     return null; // hợp lệ
                   }
@@ -98,7 +98,7 @@ class _ProductQuantityModalState extends State<ProductQuantityModal> {
                       backgroundColor: _isSubmit ? Colors.grey : Colors.orange,
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8))),
+                        borderRadius: BorderRadius.circular(8))),
                   child: const Text(
                     'Submit',
                     style: TextStyle(color: Colors.white, fontSize: 16),

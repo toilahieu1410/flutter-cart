@@ -147,11 +147,11 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.all(12.0),
               child: Text('HOT Products',
               style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.orange,
-                  fontWeight: FontWeight.w700
-                  )
-                ),
+                fontSize: 18,
+                color: Colors.orange,
+                fontWeight: FontWeight.w700
+                )
+              ),
             ),
             // Hiển thị sản phẩm hot
             SingleChildScrollView(
@@ -169,21 +169,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(6.0),
                           child: ProductTile(
-                              product: product,
-                              showHotIcon: true,
-                              onAddToCart: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (_) => QuantitySelectorBottomSheet(
-                                    product: product,
-                                    onAddToCart: (quantity) {
-                                      context
-                                        .read<CartBloc>()
-                                        .add(AddToCartEvent(product, quantity));
-                                    },
-                                  ),
-                                );
-                              }),
+                            product: product,
+                            showHotIcon: true,
+                            onAddToCart: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (_) => QuantitySelectorBottomSheet(
+                                  product: product,
+                                  onAddToCart: (quantity) {
+                                    context
+                                      .read<CartBloc>()
+                                      .add(AddToCartEvent(product, quantity));
+                                  },
+                                ),
+                              );
+                            }
+                          ),
                         ),
                       );
                     }),

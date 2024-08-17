@@ -43,15 +43,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget build(BuildContext context) {
     final priceFormat = NumberFormat.currency(
       locale: 'vi_VN',
-      symbol: 'đ',
+      symbol: '₫',
       decimalDigits: 0,
     );
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.orange,
         centerTitle: true,
-        title:
-            const Text('Product Detail', style: TextStyle(color: Colors.white)),
+        title: const Text(
+          'Product Detail', 
+          style: TextStyle(
+            color: Colors.white
+            ),
+          ),
         actions: [
           BlocBuilder<CartBloc, CartState>(builder: (context, state) {
             return Stack(
@@ -78,7 +82,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         style: const TextStyle(fontSize: 10),
                       ),
                     ),
-                  )
+                  ),
               ],
             );
           }),
@@ -99,18 +103,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: widget.product.imageUrl.startsWith('http')
-                            ? Image.network(
-                                widget.product.imageUrl,
-                                width: double.infinity,
-                                height: 250,
-                                fit: BoxFit.cover,
-                              )
-                            : Image.asset(
-                                widget.product.imageUrl,
-                                width: double.infinity,
-                                height: 250,
-                                fit: BoxFit.cover,
-                              ),
+                        ? Image.network(
+                            widget.product.imageUrl,
+                            width: double.infinity,
+                            height: 250,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            widget.product.imageUrl,
+                            width: double.infinity,
+                            height: 250,
+                            fit: BoxFit.cover,
+                          ),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -138,9 +142,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     const SizedBox(height: 10),
                     // Mô tả sản phẩm (dữ liệu test)
                     const Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent volutpat justo a purus fermentum, '
-                      'a fermentum ligula malesuada. Suspendisse potenti. Proin interdum urna id ipsum hendrerit, '
-                      'in gravida lacus aliquam. Aliquam erat volutpat.',
+                      'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'
+                      'It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, '
+                      'and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
                       style: TextStyle(fontSize: 16, color: Colors.grey),
                     ),
                   ],
@@ -163,10 +167,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       width: 35,
                       height: 35,
                       decoration: BoxDecoration(
-                          border: Border.all(
-                            color: const Color.fromARGB(255, 190, 189, 189),
-                          ),
-                          borderRadius: BorderRadius.circular(4)),
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 190, 189, 189),
+                        ),
+                        borderRadius: BorderRadius.circular(4)),
                       child: IconButton(
                         iconSize: 16,
                         icon: const Icon(Icons.remove),
@@ -183,7 +187,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       onTap: _showQuantityInputModal,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 4),
+                          horizontal: 20, vertical: 4),
                         child: Text(
                           quantity.toString(),
                           style: const TextStyle(fontSize: 16),
@@ -194,10 +198,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       width: 35,
                       height: 35,
                       decoration: BoxDecoration(
-                          border: Border.all(
-                            color: const Color.fromARGB(255, 190, 189, 189),
-                          ),
-                          borderRadius: BorderRadius.circular(4)),
+                        border: Border.all(
+                          color: const Color.fromARGB(255, 190, 189, 189),
+                        ),
+                        borderRadius: BorderRadius.circular(4)),
                       child: IconButton(
                         iconSize: 16,
                         icon: const Icon(Icons.add),
